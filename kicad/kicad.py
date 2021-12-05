@@ -7,6 +7,7 @@ from datetime import datetime
 
 import pcbnew
 from ..core import core
+#from ..data.parser_data import ParserData
 
 class SimplePlugin(pcbnew.ActionPlugin, object):
 
@@ -16,13 +17,13 @@ class SimplePlugin(pcbnew.ActionPlugin, object):
         self.InitLogger()
         self.logger = logging.getLogger(__name__)
 
-        self.name = "Simple Plugin"
-        self.category = "Read PCB"
+        self.name = "Length Matching"
+        self.category = "Length Matching"
         self.pcbnew_icon_support = hasattr(self, "show_toolbar_button")
         self.show_toolbar_button = True
         icon_dir = os.path.dirname(os.path.dirname(__file__))
         self.icon_file_name = os.path.join(icon_dir, 'icon.png')
-        self.description = "Simple Plugin"
+        self.description = "Length Matching Plugin"
 
     def defaults(self):
         pass
@@ -37,7 +38,7 @@ class SimplePlugin(pcbnew.ActionPlugin, object):
             return
 
         try:
-            core.run_with_dialog(logger)
+            core.run_with_dialog(logger, board)
         except ParsingException as e:
             logger.error(str(e))
 
@@ -49,7 +50,7 @@ class SimplePlugin(pcbnew.ActionPlugin, object):
         handler1 = logging.StreamHandler(sys.stderr)
         handler1.setLevel(logging.DEBUG)
 
-        log_file = os.path.join(os.path.dirname(__file__), "..", "logger.log")
+        log_file = os.path.join(os.path.dirname(__file__), "..", "length-matching.log")
 
         # and to our error file
         handler2 = logging.FileHandler(log_file)
@@ -61,3 +62,4 @@ class SimplePlugin(pcbnew.ActionPlugin, object):
         handler2.setFormatter(formatter)
         root.addHandler(handler1)
         root.addHandler(handler2)
+

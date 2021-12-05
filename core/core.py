@@ -53,10 +53,10 @@ def main(logger):
 
 # -----------------------------------------------------------------------------
 
-def run_with_dialog(logger):
+def run_with_dialog(logger, board):
 
     #config.load_from_ini()
-    dlg = SettingsDialog()
+    dlg = SettingsDialog(board)
     try:
         #config.netlist_initial_directory = os.path.dirname(parser.file_name)
        

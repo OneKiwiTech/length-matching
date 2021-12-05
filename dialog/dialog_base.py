@@ -5,7 +5,7 @@ import wx.xrc
 ## Class SettingsDialogBase
 ###########################################################################
 
-class SettingsDialogBase (wx.Dialog):
+class SettingsDialogBase(wx.Dialog):
 
     def __init__(self, parent):
         wx.Dialog.__init__ (self, parent, id = wx.ID_ANY, 
@@ -77,31 +77,77 @@ class GeneralSettingsPanelBase ( wx.Panel ):
     def __init__(self, parent, id = wx.ID_ANY, pos = wx.DefaultPosition, size = wx.Size( -1,-1 ), style = wx.TAB_TRAVERSAL, name = wx.EmptyString):
         wx.Panel.__init__ (self, parent, id = id, pos = pos, size = size, style = style, name = name)
 
-        box1 = wx.BoxSizer(wx.VERTICAL)
+        sizerMain = wx.BoxSizer(wx.VERTICAL)
+        sizerGroup = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, u"label"), wx.VERTICAL)
+        sizerBox = wx.BoxSizer(wx.VERTICAL)
+        sizerClass = wx.BoxSizer(wx.HORIZONTAL)
+        self.labelClass = wx.StaticText(sizerGroup.GetStaticBox(), wx.ID_ANY, u"Net Class", wx.DefaultPosition, wx.DefaultSize, 0)
+        self.labelClass.Wrap(-1)
 
-        group1 = wx.StaticBoxSizer(wx.StaticBox(self, wx.ID_ANY, u"Group Name" ), wx.VERTICAL)
+        sizerClass.Add(self.labelClass, 0, wx.ALL, 5)
 
-        self.textInput = wx.TextCtrl(group1.GetStaticBox(), wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0)
-        self.buttonShow = wx.Button(group1.GetStaticBox(), wx.ID_ANY, u"Show", wx.DefaultPosition, wx.DefaultSize, 0)
-		
+        comboClassChoices = []
+        self.comboClass = wx.ComboBox(sizerGroup.GetStaticBox(), wx.ID_ANY, u"Combo!", wx.DefaultPosition, wx.DefaultSize, comboClassChoices, 0)
+        sizerClass.Add(self.comboClass, 0, wx.ALL, 5)
 
-        self.labelStatus = wx.StaticText(group1.GetStaticBox(), wx.ID_ANY, u"Status", wx.DefaultPosition, wx.DefaultSize, 0)
+
+        sizerBox.Add(sizerClass, 0, wx.EXPAND, 5)
+
+        sizerNet = wx.BoxSizer(wx.HORIZONTAL)
+
+        self.labelNet = wx.StaticText(sizerGroup.GetStaticBox(), wx.ID_ANY, u"Net Name", wx.DefaultPosition, wx.DefaultSize, 0)
+        self.labelNet.Wrap(-1)
+
+        sizerNet.Add(self.labelNet, 0, wx.ALL, 5)
+
+        listboxNetChoices = []
+        self.listboxNet = wx.ListBox(sizerGroup.GetStaticBox(), wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, listboxNetChoices, 0)
+        sizerNet.Add(self.listboxNet, 0, wx.ALL, 5)
+
+
+        sizerBox.Add(sizerNet, 0, wx.EXPAND, 5)
+
+        sizerPad = wx.BoxSizer(wx.HORIZONTAL)
+
+        self.labelFromPad = wx.StaticText(sizerGroup.GetStaticBox(), wx.ID_ANY, u"From Pad", wx.DefaultPosition, wx.DefaultSize, 0)
+        self.labelFromPad.Wrap(-1)
+
+        sizerPad.Add(self.labelFromPad, 0, wx.ALL, 5)
+
+        comboFromPadChoices = []
+        self.comboFromPad = wx.ComboBox(sizerGroup.GetStaticBox(), wx.ID_ANY, u"Combo!", wx.DefaultPosition, wx.DefaultSize, comboFromPadChoices, 0)
+        sizerPad.Add(self.comboFromPad, 0, wx.ALL, 5)
+
+        self.labelToPad = wx.StaticText(sizerGroup.GetStaticBox(), wx.ID_ANY, u"To Pad", wx.DefaultPosition, wx.DefaultSize, 0)
+        self.labelToPad.Wrap(-1)
+
+        sizerPad.Add(self.labelToPad, 0, wx.ALL, 5)
+
+        comboToPadChoices = []
+        self.comboToPad = wx.ComboBox(sizerGroup.GetStaticBox(), wx.ID_ANY, u"Combo!", wx.DefaultPosition, wx.DefaultSize, comboToPadChoices, 0)
+        sizerPad.Add(self.comboToPad, 0, wx.ALL, 5)
+
+
+        sizerBox.Add(sizerPad, 0, wx.EXPAND, 5)
+
+        self.labelStatus = wx.StaticText(sizerGroup.GetStaticBox(), wx.ID_ANY, u"Status", wx.DefaultPosition, wx.DefaultSize, 0)
         self.labelStatus.Wrap(-1)
-        
-        group1.Add(self.textInput, 1, wx.EXPAND, 5)
-        group1.Add(self.buttonShow, 0, wx.ALL, 5)
-        group1.Add(self.labelStatus, 0, wx.ALL, 5)
 
-        box1.Add(group1, 0, wx.ALL|wx.EXPAND, 5)
+        sizerBox.Add(self.labelStatus, 0, wx.ALL, 5)
 
+
+        sizerGroup.Add(sizerBox, 1, wx.EXPAND, 5)
+
+
+        sizerMain.Add(sizerGroup, 1, wx.EXPAND, 5)
 # -------------------------------------------------------------
 
-        self.SetSizer(box1)
+        self.SetSizer(sizerMain)
         self.Layout()
-        box1.Fit(self)
+        sizerMain.Fit(self)
 
         # Connect Events
-        self.buttonShow.Bind(wx.EVT_BUTTON, self.OnShowClick)
+        #self.buttonShow.Bind(wx.EVT_BUTTON, self.OnShowClick)
         
 
     def __del__(self):

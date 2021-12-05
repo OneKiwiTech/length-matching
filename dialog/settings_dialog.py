@@ -12,9 +12,9 @@ def pop_error(msg):
 
 
 class SettingsDialog(dialog_base.SettingsDialogBase):
-    def __init__(self):
+    def __init__(self, board):
         dialog_base.SettingsDialogBase.__init__(self, None)
-        self.panel = SettingsDialogPanel(self)
+        self.panel = SettingsDialogPanel(self, board)
         best_size = self.panel.BestSize
         # hack for some gtk themes that incorrectly calculate best size
         best_size.IncBy(dx=0, dy=30)
@@ -38,10 +38,10 @@ class SettingsDialog(dialog_base.SettingsDialogBase):
 
 # Implementing settings_dialog
 class SettingsDialogPanel(dialog_base.SettingsDialogPanel):
-    def __init__(self, parent):
+    def __init__(self, parent, board):
         #self.config_save_func = config_save_func
         dialog_base.SettingsDialogPanel.__init__(self, parent)
-        self.general = GeneralSettingsPanel(self.notebook)
+        self.general = GeneralSettingsPanel(self.notebook, board)
         self.notebook.AddPage(self.general, "General")
 
     def OnExit(self, event):
@@ -54,11 +54,12 @@ class SettingsDialogPanel(dialog_base.SettingsDialogPanel):
 # Implementing GeneralSettingsPanelBase
 class GeneralSettingsPanel(dialog_base.GeneralSettingsPanelBase):
 
-    def __init__(self, parent):
+    def __init__(self, parent, board):
         dialog_base.GeneralSettingsPanelBase.__init__(self, parent)
         #self.file_name_format_hint = file_name_format_hint
-    
-    def OnShowClick(self, event):
-        txt = self.textInput.GetValue()
+        bds = board.GetDesignSettings()
+        #txt = bds.GetNetClasses().NetClasses().items()[0]
+        txt = str(bds.GetNetClasses().GetCount())
         self.labelStatus.LabelText = txt
+    
 
