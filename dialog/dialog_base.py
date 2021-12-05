@@ -86,9 +86,13 @@ class GeneralSettingsPanelBase ( wx.Panel ):
 
         sizerClass.Add(self.labelClass, 0, wx.ALL, 5)
 
-        comboClassChoices = []
-        self.comboClass = wx.ComboBox(sizerGroup.GetStaticBox(), wx.ID_ANY, u"Combo!", wx.DefaultPosition, wx.DefaultSize, comboClassChoices, 0)
-        sizerClass.Add(self.comboClass, 0, wx.ALL, 5)
+        #comboClassChoices = []
+        #self.comboClass = wx.ComboBox(sizerGroup.GetStaticBox(), wx.ID_ANY, u"Combo!", wx.DefaultPosition, wx.DefaultSize, comboClassChoices, 0)
+        #sizerClass.Add(self.comboClass, 0, wx.ALL, 5)
+        choiceClassChoices = [ wx.EmptyString, _(u"["), _(u"("), _(u"/"), _(u"\\"), _(u"<"), _(u">") ]
+		self.choiceClass = wx.Choice(sizerGroup.GetStaticBox(), wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, choiceClassChoices, 0 )
+		self.choiceClass.SetSelection( 0 )
+        sizerClass.Add( self.choiceClass, 0, wx.ALL, 5 )
 
 
         sizerBox.Add(sizerClass, 0, wx.EXPAND, 5)
@@ -147,7 +151,7 @@ class GeneralSettingsPanelBase ( wx.Panel ):
         sizerMain.Fit(self)
 
         # Connect Events
-        #self.buttonShow.Bind(wx.EVT_BUTTON, self.OnShowClick)
+        #self.choiceClass.Bind( wx.EVT_CHOICE, self.OnClassNetSelected)
         
 
     def __del__(self):
@@ -155,8 +159,8 @@ class GeneralSettingsPanelBase ( wx.Panel ):
 
 
     # Virtual event handlers, overide them in your derived class
-    #def OnSize( self, event ):
+    #def OnClassNetSelected(self, event):
         #event.Skip()
 
-    def OnShowClick(self, event):
-        event.Skip()
+    #def OnShowClick(self, event):
+        #event.Skip()

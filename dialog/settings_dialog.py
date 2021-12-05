@@ -58,8 +58,19 @@ class GeneralSettingsPanel(dialog_base.GeneralSettingsPanelBase):
         dialog_base.GeneralSettingsPanelBase.__init__(self, parent)
         #self.file_name_format_hint = file_name_format_hint
         bds = board.GetDesignSettings()
-        #txt = bds.GetNetClasses().NetClasses().items()[0]
-        txt = str(bds.GetNetClasses().GetCount())
-        self.labelStatus.LabelText = txt
-    
+        # type wxString
+        netclasses = [str(k) for k, v in bds.GetNetClasses().NetClasses().items()]
+
+        #for s in netclasses:
+            #self.choiceClass.Append(s)
+
+        for net in bds.GetNetClasses().Find(netclasses[0]).NetNames():
+            self.listboxNet.Append(str(net))
+        
+
+        #txt = str(bds.GetNetClasses().GetCount())
+        #self.labelStatus.LabelText = keys[0]
+    #def OnClassNetSelected(self, event):
+        #self.comboClass.GetString(event.GetSelection())
+        #self.labelStatus.LabelText = 'aaa'
 
