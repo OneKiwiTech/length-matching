@@ -86,9 +86,6 @@ class GeneralSettingsPanelBase ( wx.Panel ):
 
         sizerClass.Add(self.labelClass, 0, wx.ALL, 5)
 
-        #comboClassChoices = []
-        #self.comboClass = wx.ComboBox(sizerGroup.GetStaticBox(), wx.ID_ANY, u"Combo!", wx.DefaultPosition, wx.DefaultSize, comboClassChoices, 0)
-        #sizerClass.Add(self.comboClass, 0, wx.ALL, 5)
         choiceClassChoices = []
         self.choiceClass = wx.Choice(sizerGroup.GetStaticBox(), wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, choiceClassChoices, 0 )
         self.choiceClass.SetSelection( 0 )
@@ -118,21 +115,26 @@ class GeneralSettingsPanelBase ( wx.Panel ):
 
         sizerPad.Add(self.labelFromPad, 0, wx.ALL, 5)
 
-        comboFromPadChoices = []
-        self.comboFromPad = wx.ComboBox(sizerGroup.GetStaticBox(), wx.ID_ANY, u"Combo!", wx.DefaultPosition, wx.DefaultSize, comboFromPadChoices, 0)
-        sizerPad.Add(self.comboFromPad, 0, wx.ALL, 5)
+        choiceseFromPad = []
+        self.choiceFromPad = wx.Choice(sizerGroup.GetStaticBox(), wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, choiceseFromPad, 0 )
+        self.choiceFromPad.SetSelection( 0 )
+        sizerPad.Add(self.choiceFromPad, 0, wx.ALL, 5)
 
         self.labelToPad = wx.StaticText(sizerGroup.GetStaticBox(), wx.ID_ANY, u"To Pad", wx.DefaultPosition, wx.DefaultSize, 0)
         self.labelToPad.Wrap(-1)
 
         sizerPad.Add(self.labelToPad, 0, wx.ALL, 5)
 
-        comboToPadChoices = []
-        self.comboToPad = wx.ComboBox(sizerGroup.GetStaticBox(), wx.ID_ANY, u"Combo!", wx.DefaultPosition, wx.DefaultSize, comboToPadChoices, 0)
-        sizerPad.Add(self.comboToPad, 0, wx.ALL, 5)
+        choiceseToPad = []
+        self.choiceToPad = wx.Choice(sizerGroup.GetStaticBox(), wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, choiceseToPad, 0 )
+        self.choiceToPad.SetSelection( 0 )
+        sizerPad.Add(self.choiceToPad, 0, wx.ALL, 5)
 
 
         sizerBox.Add(sizerPad, 0, wx.EXPAND, 5)
+
+        self.buttonCaculator = wx.Button(sizerGroup.GetStaticBox(), wx.ID_ANY, u"Caculator", wx.DefaultPosition, wx.DefaultSize, 0 )
+        sizerBox.Add(self.buttonCaculator, 0, wx.ALL, 5 )
 
         self.labelStatus = wx.StaticText(sizerGroup.GetStaticBox(), wx.ID_ANY, u"Status", wx.DefaultPosition, wx.DefaultSize, 0)
         self.labelStatus.Wrap(-1)
@@ -151,7 +153,9 @@ class GeneralSettingsPanelBase ( wx.Panel ):
         sizerMain.Fit(self)
 
         # Connect Events
-        self.choiceClass.Bind( wx.EVT_CHOICE, self.OnClassNetSelected)
+        self.choiceClass.Bind(wx.EVT_CHOICE, self.OnClassNetSelected)
+        self.listboxNet.Bind(wx.EVT_LISTBOX, self.OnNetNameSelected)
+        self.buttonCaculator.Bind(wx.EVT_BUTTON, self.OnCaculatorClicked)
         
 
     def __del__(self):
@@ -161,6 +165,9 @@ class GeneralSettingsPanelBase ( wx.Panel ):
     # Virtual event handlers, overide them in your derived class
     def OnClassNetSelected(self, event):
         event.Skip()
+    
+    def OnNetNameSelected(self, event):
+        event.Skip()
 
-    #def OnShowClick(self, event):
-        #event.Skip()
+    def OnCaculatorClicked(self, event):
+        event.Skip()

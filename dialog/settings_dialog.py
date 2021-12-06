@@ -57,27 +57,44 @@ class GeneralSettingsPanel(dialog_base.GeneralSettingsPanelBase):
     def __init__(self, parent, board):
         dialog_base.GeneralSettingsPanelBase.__init__(self, parent)
         #self.file_name_format_hint = file_name_format_hint
-        bds = board.GetDesignSettings()
+        self.bds = board.GetDesignSettings()
         # type wxString
-        netclasses = [str(k) for k, v in bds.GetNetClasses().NetClasses().items()]
+        self.netclasses = [str(k) for k, v in self.bds.GetNetClasses().NetClasses().items()]
+        self.netclasses = ['Default'] + self.netclasses
 
-        for s in netclasses:
+        for s in self.netclasses:
             self.choiceClass.Append(s)
+        self.pcb = board
+        self.footprints = board.GetFootprints()
 
-        for net in bds.GetNetClasses().Find(netclasses[0]).NetNames():
-            self.listboxNet.Append(str(net))
-        
-
-        #txt = str(bds.GetNetClasses().GetCount())
-        #self.labelStatus.LabelText = keys[0]
     def OnClassNetSelected(self, event):
-        #self.comboClass.GetString(event.GetSelection())
-        #bds = self.board.GetDesignSettings()
-        # type wxString
-        #netclasses = [str(k) for k, v in bds.GetNetClasses().NetClasses().items()]
         index = event.GetSelection()
         self.listboxNet.Clear()
-        #for net in bds.GetNetClasses().Find(netclasses[index]).NetNames():
-            #self.listboxNet.Append(str(net))
-        self.labelStatus.LabelText = str(event.GetSelection())
+        for net in self.bds.GetNetClasses().Find(self.netclasses[index]).NetNames():
+            self.listboxNet.Append(str(net))
+        
+    def OnNetNameSelected(self, event):
+        self.choiceFromPad.Clear()
+        self.choiceToPad.Clear()
+        index = event.GetSelection()
+        netname = self.listboxNet.GetString(index)
+        netcode = self.pcb.GetNetcodeFromNetname(netname)
+        self.labelStatus.LabelText = netname
+        for footprint in self.footprints:
+            for pad in footprint.Pads():
+                netpad = str(pad.GetNetname())
+                netpadcode = self.pcb.GetNetcodeFromNetname(netpad)
+                if netcode == netpadcode:
+                    ref = str(footprint.GetReference())
+                    pin = str(pad.GetPadName())
+                    self.choiceFromPad.Append(ref + '.' + pin)
+                    self.choiceToPad.Append(ref + '.' + pin)
+        
+        if self.choiceFromPad.GetCount() > 1:
+            self.choiceFromPad.SetSelection(0)
+            self.choiceToPad.SetSelection(1)
+        #self.labelStatus.LabelText = netname
+    
+    def OnCaculatorClicked(self, event):
+        self.labelStatus.LabelText = 'Caculator Clicked'
 
