@@ -60,10 +60,13 @@ class GeneralSettingsPanel(dialog_base.GeneralSettingsPanelBase):
         self.bds = board.GetDesignSettings()
         # type wxString
         self.netclasses = [str(k) for k, v in self.bds.GetNetClasses().NetClasses().items()]
-        self.netclasses = ['Default'] + self.netclasses
 
         for s in self.netclasses:
             self.choiceClass.Append(s)
+        self.choiceClass.SetSelection(0)
+        for net in self.bds.GetNetClasses().Find(self.netclasses[0]).NetNames():
+            self.listboxNet.Append(str(net))
+
         self.pcb = board
         self.footprints = board.GetFootprints()
 
