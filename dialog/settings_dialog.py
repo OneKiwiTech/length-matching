@@ -61,8 +61,8 @@ class GeneralSettingsPanel(dialog_base.GeneralSettingsPanelBase):
         # type wxString
         netclasses = [str(k) for k, v in bds.GetNetClasses().NetClasses().items()]
 
-        #for s in netclasses:
-            #self.choiceClass.Append(s)
+        for s in netclasses:
+            self.choiceClass.Append(s)
 
         for net in bds.GetNetClasses().Find(netclasses[0]).NetNames():
             self.listboxNet.Append(str(net))
@@ -70,7 +70,14 @@ class GeneralSettingsPanel(dialog_base.GeneralSettingsPanelBase):
 
         #txt = str(bds.GetNetClasses().GetCount())
         #self.labelStatus.LabelText = keys[0]
-    #def OnClassNetSelected(self, event):
+    def OnClassNetSelected(self, event):
         #self.comboClass.GetString(event.GetSelection())
-        #self.labelStatus.LabelText = 'aaa'
+        #bds = self.board.GetDesignSettings()
+        # type wxString
+        #netclasses = [str(k) for k, v in bds.GetNetClasses().NetClasses().items()]
+        index = event.GetSelection()
+        self.listboxNet.Clear()
+        #for net in bds.GetNetClasses().Find(netclasses[index]).NetNames():
+            #self.listboxNet.Append(str(net))
+        self.labelStatus.LabelText = str(event.GetSelection())
 

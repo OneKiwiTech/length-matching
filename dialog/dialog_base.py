@@ -53,19 +53,19 @@ class SettingsDialogPanel (wx.Panel):
         self.Layout()
 
         # Connect Events
-        self.m_button41.Bind(wx.EVT_BUTTON, self.OnSaveSettings)
-        self.m_button43.Bind(wx.EVT_BUTTON, self.OnExit)
+        #self.m_button41.Bind(wx.EVT_BUTTON, self.OnSaveSettings)
+        #self.m_button43.Bind(wx.EVT_BUTTON, self.OnExit)
 
     def __del__(self):
         pass
 
 
     # Virtual event handlers, overide them in your derived class
-    def OnSaveSettings(self, event):
-        event.Skip()
+    #def OnSaveSettings(self, event):
+        #event.Skip()
 
-    def OnExit(self, event):
-        event.Skip()
+    #def OnExit(self, event):
+        #event.Skip()
 
 
 ###########################################################################
@@ -89,9 +89,9 @@ class GeneralSettingsPanelBase ( wx.Panel ):
         #comboClassChoices = []
         #self.comboClass = wx.ComboBox(sizerGroup.GetStaticBox(), wx.ID_ANY, u"Combo!", wx.DefaultPosition, wx.DefaultSize, comboClassChoices, 0)
         #sizerClass.Add(self.comboClass, 0, wx.ALL, 5)
-        choiceClassChoices = [ wx.EmptyString, _(u"["), _(u"("), _(u"/"), _(u"\\"), _(u"<"), _(u">") ]
-		self.choiceClass = wx.Choice(sizerGroup.GetStaticBox(), wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, choiceClassChoices, 0 )
-		self.choiceClass.SetSelection( 0 )
+        choiceClassChoices = []
+        self.choiceClass = wx.Choice(sizerGroup.GetStaticBox(), wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, choiceClassChoices, 0 )
+        self.choiceClass.SetSelection( 0 )
         sizerClass.Add( self.choiceClass, 0, wx.ALL, 5 )
 
 
@@ -151,7 +151,7 @@ class GeneralSettingsPanelBase ( wx.Panel ):
         sizerMain.Fit(self)
 
         # Connect Events
-        #self.choiceClass.Bind( wx.EVT_CHOICE, self.OnClassNetSelected)
+        self.choiceClass.Bind( wx.EVT_CHOICE, self.OnClassNetSelected)
         
 
     def __del__(self):
@@ -159,8 +159,8 @@ class GeneralSettingsPanelBase ( wx.Panel ):
 
 
     # Virtual event handlers, overide them in your derived class
-    #def OnClassNetSelected(self, event):
-        #event.Skip()
+    def OnClassNetSelected(self, event):
+        event.Skip()
 
     #def OnShowClick(self, event):
         #event.Skip()
