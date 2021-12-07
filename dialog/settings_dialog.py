@@ -5,11 +5,10 @@ import re
 import wx
 
 from . import dialog_base
-
+from ..nets import nets
 
 def pop_error(msg):
     wx.MessageBox(msg, 'Error', wx.OK | wx.ICON_ERROR)
-
 
 class SettingsDialog(dialog_base.SettingsDialogBase):
     def __init__(self, board):
@@ -99,5 +98,8 @@ class GeneralSettingsPanel(dialog_base.GeneralSettingsPanelBase):
         #self.labelStatus.LabelText = netname
     
     def OnCaculatorClicked(self, event):
-        self.labelStatus.LabelText = 'Caculator Clicked'
+        startPad = self.pcb.FindFootprintByReference('J1').FindPadByNumber('1')
+        endPad = self.pcb.FindFootprintByReference('J2').FindPadByNumber('1')
+        data = nets.NetData(startPad, endPad, self.pcb, self.labelStatus)
+        lenght = data.GetLenght()
 
