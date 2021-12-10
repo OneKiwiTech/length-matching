@@ -98,8 +98,8 @@ class GeneralSettingsPanel(dialog_base.GeneralSettingsPanelBase):
         #self.labelStatus.LabelText = netname
     
     def OnCaculatorClicked(self, event):
-        startPad = self.pcb.FindFootprintByReference('J1').FindPadByNumber('1')
-        endPad = self.pcb.FindFootprintByReference('J2').FindPadByNumber('1')
-        data = nets.NetData(startPad, endPad, self.pcb, self.labelStatus)
+        #startPad = self.pcb.FindFootprintByReference('J1').FindPadByNumber('1')
+        #endPad = self.pcb.FindFootprintByReference('J2').FindPadByNumber('1')
+        data = nets.NetData('J1', '1', 'J2', '1', self.pcb, self.labelStatus)
         lenght = data.GetLenght()
 
